@@ -1,0 +1,42 @@
+﻿.createform 
+{
+    margin-top: 1em;
+    font-size: x-large;
+    font-family: cursive;
+    background-color:#BEBBB8
+}
+
+ .textarea 
+{
+     width: 100%;
+    background-color:BEBBBB;
+}
+.borderimage 
+{
+     min-height: 100%;
+    min-width: 100%;
+    position: relative;
+    margin-left: -1em;
+    margin-right: -1em;
+    margin-top: 2em
+   
+}
+   .tab-Pane {
+border-left:1px solid #ddd;
+border-right:1px solid #ddd;
+border-bottom:1px solid #ddd;
+     
+padding :0.8em}
+     .nav-tabs {
+         background: #000000;
+                   }
+   .nav-tabs > li.active > a
+    {
+        background: #D9C355;
+         
+    }
+    #rec p {
+        padding-top: 1em
+    }
+
+
