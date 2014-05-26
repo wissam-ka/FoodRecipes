@@ -43,3 +43,28 @@ padding :0.8em}
         cursor: pointer;
        
 }
+
+.partimg_rating {
+    margin-left: 5em;
+    background: url(../Images/rating_stars.png) no-repeat  ;
+    min-height: 20px;
+    background-position: 0px 0px ;
+}
+.partimg_rating.starl0 {
+    background-position: 0px -20px ;
+}
+.partimg_rating.starl1 {
+    background-position: 0px -44px ;
+}
+.partimg_rating.starl2 {
+    background-position: 0px -87px ;
+}
+.partimg_rating.starl3 {
+    background-position: 0px -130px ;
+}
+.partimg_rating.starl4 {
+    background-position: 0px -177px ;
+}
+.partimg_rating.starl5 {
+    background-position: 0px -220px ;
+}

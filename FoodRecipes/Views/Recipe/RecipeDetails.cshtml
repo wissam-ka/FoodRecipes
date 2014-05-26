@@ -68,25 +68,31 @@
                 @Html.Raw(recipetemp.FoodPreparation.Replace("\n", "<br>"))
             </div>
             <div class="tab-pane fade " id="vid">
-                <div class="current-rate">
-                    @recipetemp.FinalRate :@recipetemp.RatingPeople
+                <div >
+                    <br/>
+                    <div class="partimg_rating container starl@(Convert.ToInt32(recipetemp.FinalRate) )">
+                 
+                    </div>
+                </div>
+                <div class="current-rate" style="margin-left: 8em">
+                   Current Rate: @recipetemp.FinalRate [@recipetemp.RatingPeople people]
                 </div>
                 <div class="starrating" >
                     
-                        <img src="~/Images/starimages.jpg" id="img1" style="width:40px;height: 40px; display:inline"/>
-                        <img src="~/Images/starimages_on.jpg" id="img1_on" style="width:40px;height: 40px;display: none "/>
+                    <img src="~/Images/starimages.jpg" id="img1" style="width:40px;height: 40px; display:inline"/>
+                    <img src="~/Images/starimages_on.jpg" id="img1_on" style="width:40px;height: 40px;display: none "/>
                  
-                        <img src="~/Images/starimages.jpg" id="img2" style="width:40px;height: 40px;display:inline"/>
-                        <img src="~/Images/starimages_on.jpg" id="img2_on" style="width:40px;height: 40px;display: none "/>
+                    <img src="~/Images/starimages.jpg" id="img2" style="width:40px;height: 40px;display:inline"/>
+                    <img src="~/Images/starimages_on.jpg" id="img2_on" style="width:40px;height: 40px;display: none "/>
                    
-                        <img src="~/Images/starimages.jpg" id="img3" style="width:40px;height: 40px;display:inline"/>
-                        <img src="~/Images/starimages_on.jpg"  id="img3_on" style="width:40px;height: 40px;display: none "/>
+                    <img src="~/Images/starimages.jpg" id="img3" style="width:40px;height: 40px;display:inline"/>
+                    <img src="~/Images/starimages_on.jpg"  id="img3_on" style="width:40px;height: 40px;display: none "/>
                    
-                        <img src="~/Images/starimages.jpg"  id="img4"style="width:40px;height: 40px;display:inline"/>
-                        <img src="~/Images/starimages_on.jpg" id="img4_on" style="width:40px;height: 40px;display: none "/>
+                    <img src="~/Images/starimages.jpg"  id="img4"style="width:40px;height: 40px;display:inline"/>
+                    <img src="~/Images/starimages_on.jpg" id="img4_on" style="width:40px;height: 40px;display: none "/>
                  
-                        <img src="~/Images/starimages.jpg" id="img5" style="width:40px;height: 40px;display:inline"/>
-                        <img src="~/Images/starimages_on.jpg" id="img5_on" style="width:40px;height: 40px;display: none "/>
+                    <img src="~/Images/starimages.jpg" id="img5" style="width:40px;height: 40px;display:inline"/>
+                    <img src="~/Images/starimages_on.jpg" id="img5_on" style="width:40px;height: 40px;display: none "/>
                     
 
                     
@@ -101,7 +107,7 @@
     </div> 
 </div>
 <script id="current-rate-template" type="application/htm-template">
-<p class="current-rate">
+<p class="current-rate"  style="margin-left: 8em">
     <span>
         Current Rate:{{FRate}}
     </span>
@@ -260,7 +266,7 @@
 
            
         });
-   
+  
   
 </script> 
 

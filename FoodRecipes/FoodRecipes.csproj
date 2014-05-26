@@ -239,12 +239,14 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Images\magnifying_glass.png" />
+    <Content Include="Images\rating_stars.png" />
     <Content Include="Images\siteimg\CookingTipsPage.jpg" />
     <Content Include="Images\siteimg\main1.jpg" />
     <Content Include="Images\siteimg\main2.jpg" />
     <Content Include="Images\siteimg\main3.jpg" />
     <Content Include="Images\siteimg\SV cooking picture.jpg" />
     <Content Include="Images\starimages.jpg" />
+    <Content Include="Images\starimages_half.jpg" />
     <Content Include="Images\starimages_on.jpg" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />

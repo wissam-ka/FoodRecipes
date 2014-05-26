@@ -88,7 +88,7 @@ namespace FoodRecipes.Controllers
             }
 
             return View(recipelist);
-        }
+        } 
         public ActionResult Search(string category, string searchPattern)
         {
             var searchlist = new SelectList(new[] { "Title", "Food Rate", "people number" });
@@ -132,13 +132,13 @@ namespace FoodRecipes.Controllers
 
 
             
-            var resp = db.Recipes.Find(id);
-            if (resp == null)
+            var recipe = db.Recipes.Find(id);
+            if (recipe == null)
             {
                 return View(db.Recipes.FirstOrDefault());
                 //ViewData["Resipe"] = resp;
             }
-            return View(resp);
+            return View(recipe);
             
         }
 
@@ -167,6 +167,7 @@ namespace FoodRecipes.Controllers
             }
             if (!Request.IsAjaxRequest())
                 return RedirectToAction("RecipeDetails", new { id = rate.ReId });
+
          
             return Json(new
             {
