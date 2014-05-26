@@ -1,4 +1,5 @@
 ﻿@using System.Threading
+@using FoodRecipes.Controllers
 @model FoodRecipes.Models.Recipe
 @{
     ViewBag.Title = "RecipeDetails";
@@ -7,14 +8,8 @@
    // var resp = ViewBag.Resipe;
     var recipetemp = Model;
     string pa = recipetemp.ImgPath;
-    string ma = Path.Combine("~/Images","magnifying_glass.png");
+  
 }
-<style>
-    img {
-        cursor: pointer;
-       
-}
-</style>
 <br/>
 <h2>RecipeDetails</h2>
 
@@ -73,6 +68,30 @@
                 @Html.Raw(recipetemp.FoodPreparation.Replace("\n", "<br>"))
             </div>
             <div class="tab-pane fade " id="vid">
+                <div class="current-rate">
+                    @recipetemp.FinalRate :@recipetemp.RatingPeople
+                </div>
+                <div class="starrating" >
+                    
+                        <img src="~/Images/starimages.jpg" id="img1" style="width:40px;height: 40px; display:inline"/>
+                        <img src="~/Images/starimages_on.jpg" id="img1_on" style="width:40px;height: 40px;display: none "/>
+                 
+                        <img src="~/Images/starimages.jpg" id="img2" style="width:40px;height: 40px;display:inline"/>
+                        <img src="~/Images/starimages_on.jpg" id="img2_on" style="width:40px;height: 40px;display: none "/>
+                   
+                        <img src="~/Images/starimages.jpg" id="img3" style="width:40px;height: 40px;display:inline"/>
+                        <img src="~/Images/starimages_on.jpg"  id="img3_on" style="width:40px;height: 40px;display: none "/>
+                   
+                        <img src="~/Images/starimages.jpg"  id="img4"style="width:40px;height: 40px;display:inline"/>
+                        <img src="~/Images/starimages_on.jpg" id="img4_on" style="width:40px;height: 40px;display: none "/>
+                 
+                        <img src="~/Images/starimages.jpg" id="img5" style="width:40px;height: 40px;display:inline"/>
+                        <img src="~/Images/starimages_on.jpg" id="img5_on" style="width:40px;height: 40px;display: none "/>
+                    
+
+                    
+                </div>
+               
                 @* <span style="margin-left: 5em">
                 <iframe width="400" height="400"  src="//www.youtube.com/embed/w6_rxIk3P6g"  frameborder="0" allowfullscreen ></iframe>
              </span>*@
@@ -81,11 +100,171 @@
         
     </div> 
 </div>
+<script id="current-rate-template" type="application/htm-template">
+<p class="current-rate">
+    <span>
+        Current Rate:{{FRate}}
+    </span>
+    <span>
+        [{{NNum}} peolpe]
+    </span>
+</p>
+</script>
+
 <script type="text/javascript">
-    document.querySelector('.imgma').addEventListener('click', function (e) {
+    document.querySelector('.imgma').addEventListener('click', function(e) {
         console.log(e.target);
-        console.log(e.target.documentURI);
+
         window.open(e.target.src, "realsize", "height=700,width=800");
     });
+    document.querySelector('.starrating').addEventListener('mouseover', function(e) {
+       // console.log(e.target);
+        switch (e.target.id) {
+        case "img5":
+        {
+
+            document.getElementById('img5').style.display = "none";
+            document.getElementById('img5_on').style.display = "inline";
+
+        }
+        case "img4":
+        {
+            document.getElementById('img4').style.display = "none";
+            document.getElementById('img4_on').style.display = "inline";
+        }
+        case "img3":
+        {
+
+            document.getElementById('img3').style.display = "none";
+            document.getElementById('img3_on').style.display = "inline";
+        }
+        case "img2":
+        {
+            document.getElementById('img2').style.display = "none";
+            document.getElementById('img2_on').style.display = "inline";
+        }
+        case "img1":
+        {
+            document.getElementById('img1').style.display = "none";
+            document.getElementById('img1_on').style.display = "inline";
+            break;
+
+        }
+        default:
+        }
+        e.target.addEventListener('mouseout', function outhandler(d) {
+          //  console.log(d.target);
+            switch (d.target.id) {
+            case "img5":
+            {
+
+                document.getElementById('img5').style.display = "inline";
+                document.getElementById('img5_on').style.display = "none";
+
+            }
+            case "img4":
+            {
+                document.getElementById('img4').style.display = "inline";
+                document.getElementById('img4_on').style.display = "none";
+            }
+            case "img3":
+            {
+
+                document.getElementById('img3').style.display = "inline";
+                document.getElementById('img3_on').style.display = "none";
+            }
+            case "img2":
+            {
+                document.getElementById('img2').style.display = "inline";
+                document.getElementById('img2_on').style.display = "none";
+            }
+            case "img1":
+            {
+                document.getElementById('img1').style.display = "inline";
+                document.getElementById('img1_on').style.display = "none";
+                break;
+
+            }
+            default:
+            }
+            e.target.removeEventListener('mouseout', outhandler, false);
+        }, false);
+    }, false);
+    document.querySelector('.starrating').addEventListener('mousedown', function(e) {
+        console.log(e.target);
+        console.log(e.target.id);
+
+
+        var rateValue;
+        var reid = @recipetemp.Id;
+         switch (e.target.id) {
+         case "img5_on":
+        case "img5":
+        {
+            rateValue = 5;
+            break;
+        }
+        case "img4":
+        case "img4_on":
+        {
+            rateValue = 4;
+            break;
+        }
+        case "img3":
+        case "img3_on":
+        {
+             rateValue = 3;
+            break;
+        }
+        case "img2":
+        case "img2_on":
+        {
+            rateValue = 2;
+           break;
+        }
+        case "img1":
+        case "img1_on":
+        {
+            rateValue = 1;
+            break;
+
+        }
+       
+        }
+          
+     $.ajax({
+         type: "POST",
+         //url: form.attr('action'),
+         url:"@Url.Action("Rate","Recipe")",
+         
+         data: {
+             ReId: reid,
+                    RateValue: rateValue,
+        }
+//                data: form.serialize()
+            })
+                    .success(function (data) {
+                        //alert("your rate has been submitted");
+                        var template = $('#current-rate-template').clone().html();
+                        var html =
+                            template
+                                .replace('{{FRate}}', data.FRate1)
+                                .replace('{{NNum}}', data.NNum);
+
+
+                        $('.current-rate').replaceWith(html);
+                    })
+                    .error(function () {
+                        alert("your rate has been rejected");
+                    });
+
+           
+        });
+   
   
-</script>
+</script> 
+
+
+
+
+    

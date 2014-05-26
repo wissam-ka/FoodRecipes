@@ -244,6 +244,8 @@
     <Content Include="Images\siteimg\main2.jpg" />
     <Content Include="Images\siteimg\main3.jpg" />
     <Content Include="Images\siteimg\SV cooking picture.jpg" />
+    <Content Include="Images\starimages.jpg" />
+    <Content Include="Images\starimages_on.jpg" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\jquery-1.9.1-vsdoc.js" />

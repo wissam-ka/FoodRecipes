@@ -141,5 +141,39 @@ namespace FoodRecipes.Controllers
             return View(resp);
             
         }
+
+        [HttpPost]
+        public ActionResult Rate(Rate rate)
+        {
+
+            var db = new RecipeDataContext();
+            var i = rate.ReId;
+            var tempRecipe = db.Recipes.Find(rate.ReId);
+            if (rate.RateValue > 10 || rate.RateValue < 0 )
+            {
+                ModelState.AddModelError("comm", "out of range");
+            }
+            else if (tempRecipe == null)
+            {
+                ModelState.AddModelError("ReId", "not found");
+            }
+            else
+            {
+                tempRecipe.Rates.Add(rate);
+                tempRecipe.RatingPeople = tempRecipe.RatingPeople + 1;
+                tempRecipe.FinalRate = (double)Math.Round(((tempRecipe.FinalRate * (tempRecipe.RatingPeople - 1) + rate.RateValue) / (tempRecipe.RatingPeople)), 2);
+               
+                db.SaveChanges();
+            }
+            if (!Request.IsAjaxRequest())
+                return RedirectToAction("RecipeDetails", new { id = rate.ReId });
+         
+            return Json(new
+            {
+                FRate1 = tempRecipe.FinalRate,
+                NNum = tempRecipe.RatingPeople
+
+            });
+        }
     }
 }
