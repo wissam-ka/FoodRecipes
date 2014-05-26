@@ -238,6 +238,7 @@
     <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
+    <Content Include="Images\magnifying_glass.png" />
     <Content Include="Images\siteimg\CookingTipsPage.jpg" />
     <Content Include="Images\siteimg\main1.jpg" />
     <Content Include="Images\siteimg\main2.jpg" />
@@ -309,10 +310,10 @@
   <ItemGroup>
     <None Include="Content\bootstrap-theme.css.map" />
     <None Include="Content\bootstrap.css.map" />
-    <None Include="fonts\glyphicons-halflings-regular.eot" />
-    <None Include="fonts\glyphicons-halflings-regular.svg" />
-    <None Include="fonts\glyphicons-halflings-regular.ttf" />
-    <None Include="fonts\glyphicons-halflings-regular.woff" />
+    <None Include="Controllers\fonts\glyphicons-halflings-regular.eot" />
+    <None Include="Controllers\fonts\glyphicons-halflings-regular.svg" />
+    <None Include="Controllers\fonts\glyphicons-halflings-regular.ttf" />
+    <None Include="Controllers\fonts\glyphicons-halflings-regular.woff" />
     <None Include="Scripts\jquery-1.9.1.min.map" />
     <Content Include="Views\Recipe\Index.cshtml" />
     <Content Include="Views\Recipe\Search.cshtml" />

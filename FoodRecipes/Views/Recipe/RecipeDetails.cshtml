@@ -1,4 +1,5 @@
-﻿@model FoodRecipes.Models.Recipe
+﻿@using System.Threading
+@model FoodRecipes.Models.Recipe
 @{
     ViewBag.Title = "RecipeDetails";
 }
@@ -6,7 +7,14 @@
    // var resp = ViewBag.Resipe;
     var recipetemp = Model;
     string pa = recipetemp.ImgPath;
+    string ma = Path.Combine("~/Images","magnifying_glass.png");
 }
+<style>
+    img {
+        cursor: pointer;
+       
+}
+</style>
 <br/>
 <h2>RecipeDetails</h2>
 
@@ -22,7 +30,7 @@
             <div class="tab-pane fade active in " id="info">              
                 <div class="col-lg-3">
                    
-                   <img src="@Url.Content(pa)" class="img-responsive"alt="" style="min-height:30% ;margin-top: 0.5em">
+                    <img src="@Url.Content(pa)" class="img-responsive imgma"alt="" style="min-height:30% ;margin-top: 0.5em">
                 </div>
                 <div class="col-lg-4">
                     
@@ -34,42 +42,50 @@
                 
             </div>
             <div class="tab-pane fade " id="ingred" style="font-family:Monotype Corsiva; ">
-               <table>
-                        <tr >
+                <table>
+                    <tr >
                            
-                            <td>
-                                <table  >    
-                                    @foreach (var tmp in recipetemp.Ingredients)
-                                    {
+                        <td>
+                            <table  >    
+                                @foreach (var tmp in recipetemp.Ingredients)
+                                {
                                     
-                                        <tr  >
-                                            <td style="text-align: right "  >
-                                                @tmp.Amount @tmp.Unit
+                                    <tr  >
+                                        <td style="text-align: right "  >
+                                            @tmp.Amount @tmp.Unit
                                         
-                                            </td>
+                                        </td>
                                         
-                                            <td >
-                                                @tmp.Name
-                                            </td>
-                                        </tr>
+                                        <td >
+                                            @tmp.Name
+                                        </td>
+                                    </tr>
                                    
                 
-                                    }
-                                </table>
-                            </td>
-                        </tr>
-                    </table>
+                                }
+                            </table>
+                        </td>
+                    </tr>
+                </table>
             </div>
             <div class="tab-pane fade " id="rec" style="font-family:cursive ;font-size:large ">
              
-                  @Html.Raw(recipetemp.FoodPreparation.Replace("\n", "<br>"))
+                @Html.Raw(recipetemp.FoodPreparation.Replace("\n", "<br>"))
             </div>
             <div class="tab-pane fade " id="vid">
-              @* <span style="margin-left: 5em">
+                @* <span style="margin-left: 5em">
                 <iframe width="400" height="400"  src="//www.youtube.com/embed/w6_rxIk3P6g"  frameborder="0" allowfullscreen ></iframe>
              </span>*@
             </div>
-         </div>
+        </div>
         
     </div> 
 </div>
+<script type="text/javascript">
+    document.querySelector('.imgma').addEventListener('click', function (e) {
+        console.log(e.target);
+        console.log(e.target.documentURI);
+        window.open(e.target.src, "realsize", "height=700,width=800");
+    });
+  
+</script>
