@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.WebPages;
+using DotNetOpenAuth.Messaging;
 using FoodRecipes.Models;
 
 
@@ -149,7 +150,7 @@ namespace FoodRecipes.Controllers
             var db = new RecipeDataContext();
             var i = rate.ReId;
             var tempRecipe = db.Recipes.Find(rate.ReId);
-            if (rate.RateValue > 10 || rate.RateValue < 0 )
+            if (rate.RateValue > 10 || rate.RateValue < 0)
             {
                 ModelState.AddModelError("comm", "out of range");
             }
@@ -161,14 +162,18 @@ namespace FoodRecipes.Controllers
             {
                 tempRecipe.Rates.Add(rate);
                 tempRecipe.RatingPeople = tempRecipe.RatingPeople + 1;
-                tempRecipe.FinalRate = (double)Math.Round(((tempRecipe.FinalRate * (tempRecipe.RatingPeople - 1) + rate.RateValue) / (tempRecipe.RatingPeople)), 2);
-               
+                tempRecipe.FinalRate =
+                    (double)
+                        Math.Round(
+                            ((tempRecipe.FinalRate*(tempRecipe.RatingPeople - 1) + rate.RateValue)/
+                             (tempRecipe.RatingPeople)), 2);
+
                 db.SaveChanges();
             }
             if (!Request.IsAjaxRequest())
-                return RedirectToAction("RecipeDetails", new { id = rate.ReId });
+                return RedirectToAction("RecipeDetails", new {id = rate.ReId});
 
-         
+
             return Json(new
             {
                 FRate1 = tempRecipe.FinalRate,
@@ -176,5 +181,41 @@ namespace FoodRecipes.Controllers
 
             });
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CalculatePeopleNumber(int newPeopleNumber, int newId)
+        {
+            var db = new RecipeDataContext();
+            var tempRecipe = db.Recipes.Find(newId);
+            List<double> newAmount =new List<double>();
+             if (tempRecipe == null)
+            {
+                ModelState.AddModelError("newId", "not found");
+            }
+            else
+             {
+                 var correctionRatio = newPeopleNumber/tempRecipe.PeopoleNumber;
+              
+                foreach (var item in tempRecipe.Ingredients)
+                {
+                   newAmount.Add((double) Math.Round(double.Parse(item.Amount)*correctionRatio, 2));
+                
+                }
+ 
+            }
+             if (!Request.IsAjaxRequest())
+                 return RedirectToAction("RecipeDetails", new { id = newId });
+
+
+            return Json(new
+            {
+                newamountlist= newAmount,
+
+            });
+            //,JsonRequestBehavior.AllowGet
+
+        }
+        
     }
 }
