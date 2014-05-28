@@ -17,7 +17,7 @@ namespace FoodRecipes.Models
         public long Id { get; set; }
         [Required] 
         public string Title { get; set; }
-         
+        public DateTime TimeStamp {get; set; }
         public int CookingTime { get; set; }
         [DisplayName("Number of people")]
         public int PeopoleNumber { get; set; }

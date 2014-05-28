@@ -18,6 +18,9 @@ namespace FoodRecipes.Controllers
 
         public ActionResult Index()
         {
+            var t = new DateTime();
+            var tt = DateTime.Now;
+            var u=0;
             return View();
         }
         [HttpGet]
@@ -28,6 +31,7 @@ namespace FoodRecipes.Controllers
         [HttpPost]
         public ActionResult Create(Models.Recipe tempRecipe, HttpPostedFileBase file)
         {
+            
             if (file != null && file.ContentLength > 0 && file.ContentType.StartsWith("image/"))
             {
                 try
@@ -51,7 +55,7 @@ namespace FoodRecipes.Controllers
                
             }
 
-
+            tempRecipe.TimeStamp = DateTime.Now;
             tempRecipe.FinalRate = 0;
             tempRecipe.RatingPeople = 0;
             if (ModelState.IsValid)
@@ -137,10 +141,73 @@ namespace FoodRecipes.Controllers
             if (recipe == null)
             {
                 return View(db.Recipes.FirstOrDefault());
-                //ViewData["Resipe"] = resp;
+              
             }
             return View(recipe);
             
+        }
+        [HttpGet]
+        public ActionResult Edit(long? id)
+        {
+            if (!id.HasValue)
+            {
+                return RedirectToAction("Index");
+            }
+            var db = new RecipeDataContext();
+            var tempRecipe = db.Recipes.Find(id);
+           // var tempRecipe = db.Recipes.FirstOrDefault();
+            if (tempRecipe == null)
+            {
+                return RedirectToAction("Index");
+               
+            }
+
+           return View(tempRecipe);
+        }
+
+        [HttpPost]
+        public ActionResult Edit(Models.Recipe tempRecipe, HttpPostedFileBase file)
+        {
+            var db = new RecipeDataContext();
+            var tempRecipeold = db.Recipes.Find(tempRecipe.Id);
+            if (file != null && file.ContentLength > 0 && file.ContentType.StartsWith("image/"))
+            {
+                try
+                {
+
+                    string temppath = Guid.NewGuid() + Path.GetExtension(file.FileName);
+                    string path = Path.Combine(Server.MapPath("~/Images/siteimg"), temppath);
+                    int i;
+                    file.SaveAs(path);
+                    ViewBag.Message = "File uploaded successfully";
+                    tempRecipe.ImgPath = Path.Combine("~/Images/siteimg", temppath);
+                }
+                catch (Exception ex)
+                {
+                    ViewBag.Message = "ERROR:" + ex.Message.ToString();
+                }
+            }
+            
+           
+            tempRecipeold.TimeStamp = DateTime.Now;
+            for (int i=0;i<tempRecipe.Ingredients.Count;i++  )
+            {
+                tempRecipeold.Ingredients[i].Name = tempRecipeold.Ingredients[i].Name;
+                tempRecipeold.Ingredients[i].Amount = tempRecipeold.Ingredients[i].Amount;
+                tempRecipeold.Ingredients[i].Unit = tempRecipeold.Ingredients[i].Unit;
+            }
+            tempRecipeold.Ingredients = tempRecipe.Ingredients;
+            
+            tempRecipe.RatingPeople = tempRecipeold.RatingPeople;
+            if (ModelState.IsValid)
+            {
+
+
+               
+                db.SaveChanges();
+               
+            }
+            return RedirectToAction("RecipeDetails", new {id=tempRecipeold.Id});
         }
 
         [HttpPost]
@@ -162,11 +229,7 @@ namespace FoodRecipes.Controllers
             {
                 tempRecipe.Rates.Add(rate);
                 tempRecipe.RatingPeople = tempRecipe.RatingPeople + 1;
-                tempRecipe.FinalRate =
-                    (double)
-                        Math.Round(
-                            ((tempRecipe.FinalRate*(tempRecipe.RatingPeople - 1) + rate.RateValue)/
-                             (tempRecipe.RatingPeople)), 2);
+                tempRecipe.FinalRate =(double)Math.Round(((tempRecipe.FinalRate*(tempRecipe.RatingPeople - 1) + rate.RateValue)/(tempRecipe.RatingPeople)), 2);
 
                 db.SaveChanges();
             }
@@ -184,8 +247,9 @@ namespace FoodRecipes.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult CalculatePeopleNumber(int newPeopleNumber, int newId)
+        public ActionResult CalculatePeopleNumber(double newPeopleNumber, int newId,string viewtime)
         {
+            var tempbool = false;
             var db = new RecipeDataContext();
             var tempRecipe = db.Recipes.Find(newId);
             List<double> newAmount =new List<double>();
@@ -195,26 +259,48 @@ namespace FoodRecipes.Controllers
             }
             else
              {
-                 var correctionRatio = newPeopleNumber/tempRecipe.PeopoleNumber;
-              
-                foreach (var item in tempRecipe.Ingredients)
+
+                 var correctionRatio = newPeopleNumber/(double)tempRecipe.PeopoleNumber;
+                 if (tempRecipe.TimeStamp.ToString().Contains(viewtime))
+                 {
+                       tempbool = true;
+                 }
+                 else
+                 {
+                    tempbool = false;  
+                 }
+
+                 foreach (var item in tempRecipe.Ingredients)
                 {
-                   newAmount.Add((double) Math.Round(double.Parse(item.Amount)*correctionRatio, 2));
+                    if (tempbool)
+                    {
+                        newAmount.Add((double) Math.Round(double.Parse(item.Amount)*correctionRatio, 2));
+                    }
+                    else
+                    {
+                        item.Amount =""+ Math.Round(double.Parse(item.Amount)*correctionRatio, 2);
+                    }
                 
                 }
  
             }
              if (!Request.IsAjaxRequest())
                  return RedirectToAction("RecipeDetails", new { id = newId });
-
-
-            return Json(new
+            if (!tempbool)
+            { var Pview=PartialView("_RecipePart", tempRecipe);
+                return Pview;
+            }
+            else
             {
-                newamountlist= newAmount,
 
-            });
-            //,JsonRequestBehavior.AllowGet
 
+                return Json(new
+                {
+                    newamountlist = newAmount,
+                    //  tempRecipe,
+                }, JsonRequestBehavior.AllowGet);
+                //,JsonRequestBehavior.AllowGet
+            }
         }
         
     }

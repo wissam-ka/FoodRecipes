@@ -7,7 +7,7 @@
     ViewBag.Title = "RecipeDetails";
 }
 @{
-   // var resp = ViewBag.Resipe;
+   
     var recipetemp = Model;
     string pa = recipetemp.ImgPath;
     var ingId = 0;
@@ -15,117 +15,10 @@
 <br/>
 <h1 >RecipeDetails</h1>
 
-<div class="row" style="margin-top:4em;margin-bottom:4em ; font-size:x-large;font-family:Monotype Corsiva">
-    <div class="col-lg-6 col-lg-push-3" >
-        <ul class="nav nav-tabs" >
-            <li class="active"><a href="#info" data-toggle="tab">Information</a> </li>
-            <li><a href="#ingred" data-toggle="tab">Ingrediants</a></li>
-            <li><a href="#rec" data-toggle="tab">Recipe</a></li>
-            <li><a href="#vid" data-toggle="tab">Video</a></li>
-        </ul>
-        <div class="tab-content" style="background: #D9C355 ;  min-height: 250px;">
-            <div class="tab-pane fade active in " id="info">              
-                <div class="col-lg-3">
-                   
-                    <img src="@Url.Content(pa)" class="img-responsive imgma"alt="" style="min-height:30% ;margin-top: 0.5em">
-                </div>
-                <div class="col-lg-4">
-                    
-                    <h2><strong>@recipetemp.Title </strong></h2>
-                    <p>Cooking time:@recipetemp.CookingTime min </p>
-                    <p>for:@recipetemp.PeopoleNumber  people</p>
-                </div>
-                    
-                
-            </div>
-            <div class="tab-pane fade " id="ingred" style="font-family:Monotype Corsiva; ">
-                <table>
-                    <tr >
-                           
-                        <td>
-                            <table  >
-                              
-                                @foreach (var tmp in recipetemp.Ingredients)
-                                {
-                                    var counter = "amounttichange" + ingId;
-                                    ingId++;
-                                    <tr  >
-                                        <td style="text-align: right "  >
-                                            <span id="@counter"> @tmp.Amount</span><span> @tmp.Unit : </span>
-                                        
-                                        </td>
-                                        
-                                        <td >
-                                            @tmp.Name
-                                        </td>
-                                    </tr>
-                                   
-                
-                                }
-                            </table>
-                        </td>
-                    </tr>
-                </table>
-                <div class="current-people-number">
-                    @using (Html.BeginForm("CalculatePeopleNumber", "Recipe"))
-                {
-                    var peoplenumber = recipetemp.PeopoleNumber;
-                
-                    <span>
-                       For: @Html.TextBox("newPeopleNumber",peoplenumber,new { @class = "small-input" }) People
-                        @Html.ValidationMessage("newPeopleNumber")
-                    </span>
-                    @Html.AntiForgeryToken()
-                    @Html.Hidden("newId",recipetemp.Id)
-                    <button type="button" class="renewPeopleNumber btn btn-sm"><span class="glyphicon glyphicon-refresh">reload</span></button>
-                                              
-                               
-                }
-                </div>
-            </div>
-            <div class="tab-pane fade " id="rec" style="font-family:cursive ;font-size:large  ">
-             
-                @Html.Raw(recipetemp.FoodPreparation.Replace("\n", "<br>"))
-            </div>
-            <div class="tab-pane fade " id="vid">
-                <div >
-                    <br/>
-                    <div class="partimg_rating container starl@(Convert.ToInt32(recipetemp.FinalRate))">
-                 
-                    </div>
-                </div>
-                <div class="current-rate" style="margin-left: 8em">
-                   Current Rate: @recipetemp.FinalRate [@recipetemp.RatingPeople people]
-                </div>
-                <div class="starrating" >
-                    
-                    <img src="~/Images/starimages.jpg" id="img1" style="width:40px;height: 40px; display:inline"/>
-                    <img src="~/Images/starimages_on.jpg" id="img1_on" style="width:40px;height: 40px;display: none "/>
-                 
-                    <img src="~/Images/starimages.jpg" id="img2" style="width:40px;height: 40px;display:inline"/>
-                    <img src="~/Images/starimages_on.jpg" id="img2_on" style="width:40px;height: 40px;display: none "/>
-                   
-                    <img src="~/Images/starimages.jpg" id="img3" style="width:40px;height: 40px;display:inline"/>
-                    <img src="~/Images/starimages_on.jpg"  id="img3_on" style="width:40px;height: 40px;display: none "/>
-                   
-                    <img src="~/Images/starimages.jpg"  id="img4"style="width:40px;height: 40px;display:inline"/>
-                    <img src="~/Images/starimages_on.jpg" id="img4_on" style="width:40px;height: 40px;display: none "/>
-                 
-                    <img src="~/Images/starimages.jpg" id="img5" style="width:40px;height: 40px;display:inline"/>
-                    <img src="~/Images/starimages_on.jpg" id="img5_on" style="width:40px;height: 40px;display: none "/>
-                    
-
-                    
-                </div>
-               
-                @* <span style="margin-left: 5em">
-                <iframe width="400" height="400"  src="//www.youtube.com/embed/w6_rxIk3P6g"  frameborder="0" allowfullscreen ></iframe>
-             </span>*@
-            </div>
-        </div>
-        
-    </div> 
+<div class="partialRecipeView" id="viewtoreplace">
+    @Html.Partial("_RecipePart",Model)
 </div>
+
 <script id="current-rate-template" type="application/htm-template">
 <p class="current-rate"  style="margin-left: 8em">
     <span>
@@ -295,13 +188,21 @@
                         data: form.serialize()
                     })
                     .success(function(data) {
-                    
-                         var list = data.newamountlist;
+                    var list = data.newamountlist;
                          console.log(list);
-                     
-                        $.each(list, function (index, item) {
-                        var counter = '#amounttichange' + index;
-                           $(counter).text(item);});
+                       if(list)
+                         {
+                         console.log(e.target.className);
+                        console.log(list);
+                       $.each(list, function (index, item) {
+                       var counter = '#amounttichange' + index;
+                          $(counter).text(item);});
+                       } 
+                        else {
+                       console.log(e.target.className);
+                             $('#viewtoreplace').html(data);
+                         }
+                      
   
                     })
                     .error(function() {
