@@ -1,99 +1,4 @@
-﻿
-@using System.Data
-@using System.Threading
-@using FoodRecipes.Controllers
-@using Microsoft.Ajax.Utilities
-@model FoodRecipes.Models.Recipe
-
-@{
-    ViewBag.Title = "RecipeDetails";
-}
-@{
-    
-    var recipetemp = Model;
-//    string pa = recipetemp.ImgPath;
-    var ingId = 0;
-    
-}
-<head>
-    <title></title>
-  @*  <script src="../../Scripts/RecipeDetails.js"></script>*@
-</head>
-<br/>
-<h1 >RecipeDetails</h1>
-
-<div class="partialRecipeView" id="viewtoreplace">
-    @Html.Partial("_RecipePart",Model)
-</div>
-<div class="row">
-    
-    <div class=" col-lg-8 col-lg-push-2 container ">
-
-        <div class="patialcommentsview">
-            @foreach (var item in Model.Comments)
-            {
-                @Html.Partial("CommentPart", item)
-            }
-        </div>
-    </div>
-</div>
-
-
-<div class="row">
-    
-    <div class="insercomments col-lg-8 col-lg-push-2 container ">
-       <div class="commentPart panel panel-primary">
-            @using (Html.BeginForm("AddComment", "Recipe"))
-            {
-                <div class="panel-heading" style="background-color: blue">
-                    <h2 class="panel-title" style="color: black"><strong>Enter your Name&nbsp;&nbsp;&nbsp;&nbsp;@Html.TextBox("UserName")<span class="small" style="color: black"> this name will not apper</span></strong></h2>
-                </div>
-                <div class="panel-body" >
-                    <p>
-                        Enter your Nick Name @Html.TextBox("NickName")<span class="small">this name will apper</span>
-                    </p>
-                   
-                    <style>
-                        textarea {
-                            width: 80%;
-                            height: 10em
-                        }
-                    </style>
-                    <hr/>
-                  <p><strong> Title:</strong> @Html.TextBox("CommentTitle")</p>
-                    
-                    <p>@Html.TextArea("UserComment","Enter your comment here.......")</p>
-                     @Html.Hidden("newcommentId",recipetemp.Id)
-                </div>
-                <button type="button" class="addnewcomment btn btn-primary" style="margin-bottom: 1em; margin-left: 1em"> Add comment</button>
-            }
-
-        </div>
-
-        
-            
-        
-        
-
-  
-    </div>
-</div>
-
-
-
-
-<script id="current-rate-template" type="application/htm-template">
-<p class="current-rate"  style="margin-left: 8em">
-    <span>
-        Current Rate:{{FRate}}
-    </span>
-    <span>
-        [{{NNum}} peolpe]
-    </span>
-</p>
-</script>
-<script type="text/javascript">
-    document.querySelector('.starrating').addEventListener('mouseover', function(e) {
+﻿    document.querySelector('.starrating').addEventListener('mouseover', function(e) {
         // console.log(e.target);
         switch (e.target.id) {
         case "img5":
@@ -238,62 +143,37 @@
            
     });
     ///////////////////////////////
-    document.querySelector('.renewPeopleNumber').addEventListener('click', function(e) {
+     document.querySelector('.renewPeopleNumber').addEventListener('click', function(e) {
         console.log(e.target);
    
-        var form = $(this).parent("form");
+                var form = $(this).parent("form");
 
-        $.ajax({
-                type: "POST",
-                url: form.attr('action'),
-                data: form.serialize()
-            })
-            .success(function(data) {
-                var list = data.newamountlist;
-                console.log(list);
-                if(list)
-                {
-                    console.log(e.target.className);
-                    console.log(list);
-                    $.each(list, function (index, item) {
-                        var counter = '#amounttichange' + index;
-                        $(counter).text(item);});
-                } 
-                else {
-                    console.log(e.target.className);
-                    $('#viewtoreplace').html(data);
-                }
+                $.ajax({
+                        type: "POST",
+                        url: form.attr('action'),
+                        data: form.serialize()
+                    })
+                    .success(function(data) {
+                    var list = data.newamountlist;
+                         console.log(list);
+                       if(list)
+                         {
+                         console.log(e.target.className);
+                        console.log(list);
+                       $.each(list, function (index, item) {
+                       var counter = '#amounttichange' + index;
+                          $(counter).text(item);});
+                       } 
+                        else {
+                       console.log(e.target.className);
+                             $('#viewtoreplace').html(data);
+                         }
                       
   
-            })
-            .error(function() {
-                alert("your rate has been rejected");
-            });
-
-    });
-
-</script>   
-<script type="text/javascript">
-document.querySelector('.addnewcomment').addEventListener('click', function(e) {
-        //e.preventDefault();
-        console.log(e.target);
-         var form = $(this).parent("form");
-          console.log(e.target.parentNode);
-        $.ajax({
-            type: "POST",
-            url: "@Url.Action("AddComment","Recipe")",
-            data: form.serialize(),
-           //data:{ada:2},
-            
-        })
-                    .success(function(data) {
-                       console.log(e.target.className);
-                             $('.patialcommentsview').append(data);
                     })
                     .error(function() {
-                     console.log(e.target.className);
                         alert("your rate has been rejected");
                     });
 
     });
-    </script>
+

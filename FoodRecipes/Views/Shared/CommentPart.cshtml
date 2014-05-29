@@ -1,0 +1,13 @@
+﻿@model FoodRecipes.Models.Comment
+
+<div class="comments-container"  style="border: 2px slateblue solid">
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h2 class="panel-title">@Model.CommentTitle</h2>
+            @Model.NickName
+        </div>
+        <div class="panel-body">
+            @Model.UserComment 
+        </div>
+    </div>
+</div>

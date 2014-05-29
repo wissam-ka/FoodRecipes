@@ -25,11 +25,15 @@ namespace FoodRecipes.Models
         public string FoodPreparation { get; set; }
         public virtual List<Rate> Rates { get; private set; }
         public virtual List<Ingredient> Ingredients { get; set; }
+        public virtual List<Comment> Comments { get; set; }
         public double FinalRate { get; set; }
         public int RatingPeople { get; set; }
         public Recipe()
         {
              Rates = new List<Rate>();
+            Comments=new List<Comment>();
+            Ingredients=new List<Ingredient>();
+
         }
         
     }

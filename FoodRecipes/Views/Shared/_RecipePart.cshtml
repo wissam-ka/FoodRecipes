@@ -69,8 +69,8 @@
                     </span>
                     @Html.AntiForgeryToken()
                     @Html.Hidden("newId",recipetemp.Id)
-                  //  @Html.Hidden("viewtime", recipetemp.TimeStamp)
-                    @Html.Hidden("viewtime","1477")
+                   @Html.Hidden("viewtime", recipetemp.TimeStamp)
+                   // @Html.Hidden("viewtime","1477")
                     <button type="button" class="renewPeopleNumber btn btn-sm">reload</button>
                                               
                                
@@ -119,4 +119,4 @@
         </div>
         
     </div> 
-</div>
+</div> 

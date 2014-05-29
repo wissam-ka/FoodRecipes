@@ -48,7 +48,7 @@ padding :0.8em}
 .partimg_rating {
     margin-left: 5em;
     background: url(../Images/rating_stars.png) no-repeat  ;
-    min-height: 20px;
+    min-height: 25px;
     background-position: 0px 0px ;
 }
 .partimg_rating.starl0 {

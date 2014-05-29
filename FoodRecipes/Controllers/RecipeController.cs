@@ -302,6 +302,25 @@ namespace FoodRecipes.Controllers
                 //,JsonRequestBehavior.AllowGet
             }
         }
+        [HttpPost]
+        public ActionResult AddComment(Comment comment, long newcommentId)
+        {
+            var db = new RecipeDataContext();
+            
+            var tempRecipe = db.Recipes.Find(newcommentId);
+            if (tempRecipe == null)
+            {
+                ModelState.AddModelError("newcommentId", "not found");
+            }
+            else
+            {
+                tempRecipe.Comments.Add(comment);
+                db.SaveChanges();
+            }
+            return PartialView("CommentPart",comment);
+               
+                
+        }
         
     }
 }
