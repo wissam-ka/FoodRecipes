@@ -1,5 +1,6 @@
 ﻿using System.Web;
 using System.Web.Mvc;
+using FoodRecipes.Filters;
 
 namespace FoodRecipes
 {
@@ -8,6 +9,8 @@ namespace FoodRecipes
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)
         {
             filters.Add(new HandleErrorAttribute());
+            filters.Add(new LogginActionFilter.ExceptionLoggingActionFiter());
+            
         }
     }
 }

@@ -6,18 +6,23 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.WebPages;
 using DotNetOpenAuth.Messaging;
+using FoodRecipes.Filters;
 using FoodRecipes.Models;
+using log4net;
+using System.Diagnostics;
 
 
 namespace FoodRecipes.Controllers
 {
+     [LogginActionFilter.LoggingActionFilter]
     public class RecipeController : Controller
     {
         //
         // GET: /Recipe/
-
+         private static readonly ILog _log = log4net.LogManager.GetLogger(typeof(Controller));
         public ActionResult Index()
         {
+          //  _log.Debug("wissss");
             var t = new DateTime();
             var tt = DateTime.Now;
             var u=0;
