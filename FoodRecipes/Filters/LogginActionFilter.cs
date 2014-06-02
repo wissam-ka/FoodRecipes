@@ -51,7 +51,7 @@ namespace FoodRecipes.Filters
             public override void OnActionExecuted(ActionExecutedContext filterContext)
             {
                 Stopwatch stopwatch = (Stopwatch)filterContext.HttpContext.Items["stopwatch"];
-                stopwatch.Stop();
+                 stopwatch.Stop();
                 _log.DebugFormat("action executed{0}",stopwatch);
                 base.OnActionExecuted(filterContext);
             }

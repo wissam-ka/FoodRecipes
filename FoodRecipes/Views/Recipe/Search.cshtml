@@ -1,4 +1,5 @@
-﻿@model IEnumerable<FoodRecipes.Models.Recipe>
+﻿@using System.Activities.Expressions
+@model IEnumerable<FoodRecipes.Models.Recipe>
 @{
     ViewBag.Title = "Search";
     
@@ -34,18 +35,7 @@
         
     </aside>
         <article class="col-lg-9 col-md-8" style="border: 2px solid;margin-left: 5em">
-            @foreach (var item in Model)
-            {
-                <div class="col-lg-4 col-sm-5 thumbnail"  >
-                    @{
-                        string pa = item.ImgPath;
-                    }
-                    <img src="@Url.Content(pa)" class="img-responsive"alt="" >
-                    <p style="text-align: center">@item.Title</p>
-                    
-                  
-                </div>
-            }
+            @Html.Partial("_SearchView",Model)
         
         </article>
         </div>

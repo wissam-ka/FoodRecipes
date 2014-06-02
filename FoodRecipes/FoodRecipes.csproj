@@ -332,6 +332,7 @@
     <Content Include="Views\Shared\_RecipePart.cshtml" />
     <Content Include="Views\Recipe\Edit.cshtml" />
     <Content Include="Views\Shared\CommentPart.cshtml" />
+    <Content Include="Views\Shared\_SearchView.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

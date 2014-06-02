@@ -19,13 +19,10 @@ namespace FoodRecipes.Controllers
     {
         //
         // GET: /Recipe/
-         private static readonly ILog _log = log4net.LogManager.GetLogger(typeof(Controller));
+        // private static readonly ILog _log = log4net.LogManager.GetLogger(typeof(Controller));
         public ActionResult Index()
         {
-          //  _log.Debug("wissss");
-            var t = new DateTime();
-            var tt = DateTime.Now;
-            var u=0;
+            
             return View();
         }
         [HttpGet]

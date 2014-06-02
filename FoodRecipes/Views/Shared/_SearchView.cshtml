@@ -1,0 +1,14 @@
+﻿@model IEnumerable<FoodRecipes.Models.Recipe>
+
+ @foreach (var item in Model)
+            {
+                <div class="col-lg-4 col-sm-5 thumbnail"  >
+                    @{
+                        string pa = item.ImgPath;
+                    }
+                    <img src="@Url.Content(pa)" class="img-responsive"alt="" >
+                    <p style="text-align: center">@item.Title</p>
+                    @Html.ActionLink("see more..","RecipeDetails","Recipe",new{id=item.Id},null)
+                  
+                </div>
+            }
