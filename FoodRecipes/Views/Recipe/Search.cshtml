@@ -83,7 +83,31 @@
                     })
                     .error(function() {
                      console.log(e.target.className);
-                        alert("your rate has been rejected");
+                        alert("your Request has been rejected");
                     });
     });
+
+  document.querySelector("#groupsize").addEventListener('change',function(e) {
+     
+   //  $("#groupsize").change(function(e) {
+             console.log(e.target);
+             $.ajax({
+                     type: "POST",
+                     url: "@Url.Action("UploadnewPage","Recipe")",
+                     data: {
+                         groupsize: $('#groupsize').val(),
+                         groupnumber: 0
+                     }
+                 })
+                 .success(function(data) {
+                     console.log(e.target.className);
+                     $('.searchPartialView').html(data);
+                 })
+                 .error(function() {
+                     console.log(e.target.className);
+                     alert("your Request has been rejected");
+                 });
+         });
+    
+
 </script>
