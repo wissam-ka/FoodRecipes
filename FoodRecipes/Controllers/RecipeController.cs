@@ -10,6 +10,7 @@ using FoodRecipes.Filters;
 using FoodRecipes.Models;
 using log4net;
 using System.Diagnostics;
+using FoodRecipes.ProjectClasses;
 
 
 namespace FoodRecipes.Controllers
@@ -73,31 +74,46 @@ namespace FoodRecipes.Controllers
         [HttpGet]
         public ActionResult Search()
         {
+            var initgroupsize = 6;
+
+            var groupnumberlist = new SelectList(new[] { "6","12", "24" });
+            ViewBag.GroupNumberList = groupnumberlist;
+            
             var searchlist = new SelectList(new[] { "Title","Food Rate", "people number" });
             ViewBag.SearchList = searchlist;
             var db = new RecipeDataContext();
-            IQueryable<Recipe> recipelist = db.Recipes;
+            SearchCal searchCal=new SearchCal(db);
+             var groupnumber=searchCal.SearchGropNumber(initgroupsize);
+          //  IQueryable<Recipe> recipelist = db.Recipes;
+            var recipelist1 = new List<Recipe>();
             if (db.Recipes.Count() != 0)
             {
+
+              
                 
-                var recipelist1 = db.Recipes;
-                
-                if (db.Recipes.Count()<=9)
+                if (db.Recipes.Count()<=initgroupsize)
                 {
-                     recipelist = recipelist1;
+                     recipelist1 = db.Recipes.ToList();
 
                 }
                 else
                 {
-                    recipelist = recipelist1.Where(a => a.Id < db.Recipes.Count());
-                 
+                  //  var idtemp = searchCal.IdStartPoint(groupnumber,initgroupsize);
+             
+                   //recipelist = recipelist1.Where(a => a.Id > (idtemp));
+                  recipelist1 = searchCal.RecipesResultList(1, initgroupsize);
+
                 }
+                
             }
 
-            return View(recipelist);
+            ViewData["groupnumber"] = groupnumber;
+            return View(recipelist1);
         } 
         public ActionResult Search(string category, string searchPattern)
         {
+            var groupnumberlist = new SelectList(new[] { "6", "12", "24" });
+            ViewBag.GroupNumberList = groupnumberlist;
             var searchlist = new SelectList(new[] { "Title", "Food Rate", "people number" });
             ViewBag.SearchList = searchlist;
             if (searchPattern.IsEmpty())
@@ -301,7 +317,7 @@ namespace FoodRecipes.Controllers
                     newamountlist = newAmount,
                     //  tempRecipe,
                 }, JsonRequestBehavior.AllowGet);
-                //,JsonRequestBehavior.AllowGet
+                
             }
         }
         [HttpPost]
@@ -323,6 +339,9 @@ namespace FoodRecipes.Controllers
                
                 
         }
+
+         
         
     }
+    
 }

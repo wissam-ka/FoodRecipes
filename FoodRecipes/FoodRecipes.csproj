@@ -179,6 +179,7 @@
     <Compile Include="Models\Rate.cs" />
     <Compile Include="Models\Recipe.cs" />
     <Compile Include="Models\RecipeDataContext.cs" />
+    <Compile Include="ProjectClasses\SearchCal.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

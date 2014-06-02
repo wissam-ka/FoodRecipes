@@ -8,6 +8,7 @@
                     }
                     <img src="@Url.Content(pa)" class="img-responsive"alt="" >
                     <p style="text-align: center">@item.Title</p>
+                    <p> id=@item.Id</p>
                     @Html.ActionLink("see more..","RecipeDetails","Recipe",new{id=item.Id},null)
                   
                 </div>

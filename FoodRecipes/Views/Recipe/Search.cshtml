@@ -2,41 +2,64 @@
 @model IEnumerable<FoodRecipes.Models.Recipe>
 @{
     ViewBag.Title = "Search";
-    
+    int groupnumber=(int)ViewData["groupnumber"];
+   
 }
 
- <div class="container"> 
-<div class="row" style="margin-top: 3em">
+<div class="container">
+  
+    <div class="row" style="margin-top: 3em">
    
-    <aside class="col-lg-3 col-md-4 searchaside" style="border: 1px solid ;margin-left: -5em">
-        @using (Html.BeginForm())
-        {
-            <fieldset>
-                <div class="editor-label">
-                    @Html.Label("Categories")
-                </div>
-                <div class="editor-field">
-                    @Html.DropDownList("category", (SelectList)ViewBag.searchlist)
+        <aside class="col-lg-3 col-md-4 searchaside" style="border: 1px solid ;margin-left: -5em">
+            @using (Html.BeginForm())
+            {
+                <fieldset>
+                    <div class="editor-label">
+                        @Html.Label("Categories")
+                    </div>
+                    <div class="editor-field">
+                        @Html.DropDownList("category", (SelectList)ViewBag.searchlist)
           
-                </div>
-                <div class="editor-label">
-                    @Html.Label("Value")
-                </div>
-                <div class="editor-field">
-                    @Html.TextBox("searchPattern", "")
-                    @Html.ValidationMessage("searchPattern") 
-                </div>
-                <p>
-                    <input type="submit" value="Search" />
-                </p>
+                    </div>
+                    <div class="editor-label">
+                        @Html.Label("Value")
+                    </div>
+                    <div class="editor-field">
+                        @Html.TextBox("searchPattern", "")
+                        @Html.ValidationMessage("searchPattern") 
+                    </div>
+                    <p>
+                        <input type="submit" value="Search" />
+                    </p>
    
-            </fieldset>
-        }
+                </fieldset>
+            }
         
-    </aside>
+        </aside>
+
         <article class="col-lg-9 col-md-8" style="border: 2px solid;margin-left: 5em">
+          
+         
             @Html.Partial("_SearchView",Model)
         
         </article>
-        </div>
+    </div>
+    <div class="row">
+       
+
+        <div class="col-xs-5 col-lg-push-7">
+           
+            <div class="btn-toolbar" role="toolbar">
+                 @Html.DropDownList("groupnumber", (SelectList)ViewBag.GroupNumberList)
+                <div class="btn-group">
+                   
+                    @for (int i = 0; i <(int)ViewData["groupnumber"] ; i++)
+                    {
+                        <button type="button" id="btnser_@i" class="btn btn-default">@i</button>
+                    }
+                     
+                </div>
+            </div>
+        </div> 
+    </div>
 </div>
