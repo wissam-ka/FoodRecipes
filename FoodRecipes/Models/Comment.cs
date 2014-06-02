@@ -8,6 +8,7 @@ namespace FoodRecipes.Models
     public class Comment
     {
         public long id { get; set; }
+        [Required]
         public string UserName { get; set; }
         public string NickName { get; set; }
         public string CommentTitle { get; set; }

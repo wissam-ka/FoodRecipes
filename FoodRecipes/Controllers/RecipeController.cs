@@ -88,13 +88,10 @@ namespace FoodRecipes.Controllers
             var recipelist1 = new List<Recipe>();
             if (db.Recipes.Count() != 0)
             {
-
-              
-                
+   
                 if (db.Recipes.Count()<=initgroupsize)
                 {
                      recipelist1 = db.Recipes.ToList();
-
                 }
                 else
                 {
@@ -106,9 +103,9 @@ namespace FoodRecipes.Controllers
                 }
                 
             }
-
+            ViewData["resultlist"] = recipelist1;
             ViewData["groupnumber"] = groupnumber;
-            return View(recipelist1);
+            return View();
         } 
         public ActionResult Search(string category, string searchPattern)
         {
@@ -139,7 +136,8 @@ namespace FoodRecipes.Controllers
                     results = results.Where(recipe => recipe.Title.Contains(searchPattern));
                 }
             
-                return View("Search", results);
+                //return View("Search", results);
+                ViewData["resultlist"] = results;
 
             }
             return View();
@@ -340,7 +338,17 @@ namespace FoodRecipes.Controllers
                 
         }
 
+        [HttpPost]
+        public ActionResult UploadnewPage(string groupnumber, int groupsize)
+        {
+              var db = new RecipeDataContext();
+            SearchCal searchCal=new SearchCal(db);
          
+            var idtemp = searchCal.IdStartPoint(int.Parse(groupnumber), groupsize);
+            var recipelist1 = searchCal.RecipesResultList(idtemp, groupsize);
+
+            return  PartialView("_SearchView",recipelist1);
+        }
         
     }
     

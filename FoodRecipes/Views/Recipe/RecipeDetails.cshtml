@@ -278,7 +278,7 @@ document.querySelector('.addnewcomment').addEventListener('click', function(e) {
         //e.preventDefault();
         console.log(e.target);
          var form = $(this).parent("form");
-          console.log(e.target.parentNode);
+         
         $.ajax({
             type: "POST",
             url: "@Url.Action("AddComment","Recipe")",

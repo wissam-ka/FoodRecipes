@@ -34,14 +34,18 @@ namespace FoodRecipes.ProjectClasses
           
         }
 
-        public long IdStartPoint(int groupnumber, int groupsize)
+        public int IdStartPoint(int groupnumber, int groupsize)
         {
-            return (dbContext.Recipes.Count() - ((long)groupnumber - 1) * (long)groupsize + 1);
+            return groupnumber * groupsize +1;
         }
         public List<Recipe> RecipesResultList (int startid,int groupsize)
          {
              List<Recipe> templist=new List<Recipe>();
-            templist = dbContext.Recipes.ToList().GetRange(startid, groupsize);
+            if (startid + groupsize > (dbContext.Recipes.Count()+1))
+            {
+                groupsize = dbContext.Recipes.Count() - startid+1;
+            }
+            templist = dbContext.Recipes.ToList().GetRange(startid-1, groupsize);
             return templist;
 
          }
