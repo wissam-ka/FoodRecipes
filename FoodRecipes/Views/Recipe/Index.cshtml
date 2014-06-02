@@ -18,8 +18,14 @@
         }
     </script>
 </head>
+ <div style="margin-top: 2em">
+        <ol class="breadcrumb">
+            <li class="active"><a href="@Url.Action("Index")">Home</a> <span class="glyphicon glyphicon-circle-arrow-right"></span></li>
+            <li ><a href="@Url.Action("Search")" >search</a> <span class="glyphicon glyphicon-circle-arrow-right"></span></li>
+        </ol>
+    </div>
 <div class="container">
-    
+     
     <div class="jumbotron" style="margin-top: 10em">
         <div class="container">
             <img class="img-responsive img-circle pull-right" id="main1" src="~/Images/siteimg/main1.jpg" style="display: none;margin-top: 2em;margin-right: -3em" alt="" width="350em" height="225em"/>
@@ -31,7 +37,7 @@
                kitchen is like cooking - and mostly for pleasure! Lunch agreed to be a hungry man will do the shopping and in no time are the most diverse dishes on the table. Main thing is varied and delicious. In the gallery you will find our favorite recipes lately.
             </p>
            <p>
-                @Html.ActionLink("see more...", "Index", "Recipe",new {@class="btn btn-primary btn-lg active"} )
+                @Html.ActionLink("see more...", "Search", "Recipe",new {@class="btn btn-primary btn-lg active"} )
             </p>
         </div>
     </div>

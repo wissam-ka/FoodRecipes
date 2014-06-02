@@ -5,18 +5,24 @@
     ViewBag.Title = "Create";
 }
 <style>
-     input {
-     width: 100%;
-     margin-bottom: 0.75em;
-     background-color:  #BEBBBB;
- }
- input[type="file"] 
-{
-    font-family: monospace;
-     font-size: xx-large;
-     background-color: #BEBBBB; 
-}
+    input {
+        width: 100%;
+        margin-bottom: 0.75em;
+        background-color:  #BEBBBB;
+    }
+    input[type="file"] 
+    {
+        font-family: monospace;
+        font-size: xx-large;
+        background-color: #BEBBBB; 
+    }
 </style>
+<div style="margin-top: 2em">
+        <ol class="breadcrumb">
+            <li ><a href="@Url.Action("Index")">Home</a> <span class="glyphicon glyphicon-circle-arrow-right"></span></li>
+            <li class="active" ><a href="#" >Create</a> <span class="glyphicon glyphicon-circle-arrow-right"></span></li>
+        </ol>
+    </div>
 <div class="container" style="margin-top: 2em">
     <div class="col-lg-2 col-xs-2">
         <img  class="img-responsive borderimage pull-left" src="~/Images/siteimg/CookingTipsPage.jpg"  alt=""  />
