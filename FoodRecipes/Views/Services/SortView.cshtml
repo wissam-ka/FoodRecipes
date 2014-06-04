@@ -3,12 +3,10 @@
 <link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 @{
     ViewBag.Title = "SortView";
-    
-  
 }
 
 <h2>SortView</h2>
-<h2> @Html.ActionLink("Back to search","Search","Recipe")</h2>
+<h2> @Html.ActionLink("Back to search", "Search", "Recipe")</h2>
 
 
 <div class="container">
@@ -22,21 +20,41 @@
                     
                    
                     <div class="editor-label">
-                        @Html.Label("page size")
+                        @Html.Label("page size:")
                     </div>
                     <div class= "editor-field">
                         @Html.DropDownList("pagesize", (SelectList)ViewBag.GroupNumberList)
                         @Html.ValidationMessage("pagesize")
                     </div>
                     <div class="editor-label">
-                        @Html.Label("Sort Patrn")
+                        @Html.Label("Sort Patrn:")
                     </div>
 
                     <div class="editor-field">
-                       
                         @Html.DropDownList("sortOrder", (SelectList)ViewBag.sortOrderlist)
                     </div>
-                    @Html.Hidden("Page",1);
+                    @Html.Hidden("Page", 1)
+                    <hr/>
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" value="Cookingtime"/> Cooking Time less than
+                        </label>
+                        @Html.TextBox("coTime", 0, new { size = 3 }) min
+                    </div>
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" value="Nless"/> Recipe For less than
+                        </label>
+                        @Html.TextBox("Pless", 0, new { size = 3 })People
+                    </div>
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" value="Nmore"/> Recipe For less than
+                        </label>
+                        @Html.TextBox("Pmore", 0, new { size = 3 })People
+                    </div>
+                    
+                    
                     <p>
                       
                         <input type="submit" class="btn btn-danger" value="Refresh"id="sendForm"  />
@@ -44,8 +62,8 @@
                          
                 </fieldset>
             }
-        
         </aside>
+
 
         <article class="searchPartialView col-lg-9 col-md-8" style="border: 2px solid;margin-left: 5em">
           
@@ -54,7 +72,7 @@
             {
                 <div class="col-lg-4 col-sm-5 thumbnail"  >
                     @{
-                        string pa = item.ImgPath;
+                string pa = item.ImgPath;
                     }
                     <img src="@Url.Content(pa)" class="img-responsive"alt="" >
                     <p style="text-align: center">@item.Title</p>
@@ -86,23 +104,3 @@
     </div>
    
 </div>
-
-
-@*<script type="text/javascript">
-    document.querySelector('#sendForm').addEventListener('click', function(e) {
-        
-        console.log(e.target.id);
-        $.ajax({
-            type: "POST",
-            url: "@Url.Action("SortView","Services")",
-            data: {
-                page: 1,
-                sortOrder: $("#sortOrder").val(),
-                pageSize: $("#pagesize").val(),
-                // document.getElementById(sortOrder).value
-
-            }
-        });
-
-    });
-</script>*@

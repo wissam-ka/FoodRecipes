@@ -187,6 +187,7 @@
     <Compile Include="Models\Recipe.cs" />
     <Compile Include="Models\RecipeDataContext.cs" />
     <Compile Include="ProjectClasses\SearchCal.cs" />
+    <Compile Include="ProjectClasses\StaticInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

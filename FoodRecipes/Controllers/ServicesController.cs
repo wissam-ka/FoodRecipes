@@ -7,6 +7,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.WebPages;
 using FoodRecipes.Models;
+using FoodRecipes.ProjectClasses;
 using PagedList;
 
 namespace FoodRecipes.Controllers
@@ -20,12 +21,12 @@ namespace FoodRecipes.Controllers
 
         public ViewResult SortView(string sortOrder, int? page,int? pagesize)
         {
-            
+            StaticInfo saticinfo = new StaticInfo(db);
             var groupnumberlist = new SelectList(new[] { "6", "12", "24" });
             ViewBag.GroupNumberList = groupnumberlist;
             var sortOrderlist = new SelectList(new[] {  "Rate","Name", "Date", "CookingTime" });
             ViewBag.sortOrderlist = sortOrderlist;
-
+            
           
             if (sortOrder.IsEmpty())
             {
@@ -50,9 +51,9 @@ namespace FoodRecipes.Controllers
                     recipestemp = recipestemp.OrderBy(s => s.FinalRate);
                     break;
             }
-    
+            
+
             var pageNumber = (page ?? 1);
-           
             var pageSize = (pagesize ?? 6);
             pageNumber = pageNumber * pagesize > recipestemp.Count() ? 1 : pageNumber;
             ViewBag.currentsize = pageSize;
@@ -60,7 +61,10 @@ namespace FoodRecipes.Controllers
             return View(recipestemp.ToPagedList(pageNumber, pageSize));
         }
 
-
+        public ActionResult CustomizedView()
+        {
+            return null;
+        }
 
 
 
