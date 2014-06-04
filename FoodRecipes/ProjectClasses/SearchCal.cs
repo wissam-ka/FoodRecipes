@@ -45,7 +45,8 @@ namespace FoodRecipes.ProjectClasses
             {
                 groupsize = dbContext.Recipes.Count() - startid+1;
             }
-            templist = dbContext.Recipes.ToList().GetRange(startid-1, groupsize);
+            //templist = dbContext.Recipes.ToList().GetRange(startid-1, groupsize);
+            templist = dbContext.Recipes.OrderBy(s=>s.Id).Skip(startid - 1).Take(groupsize).ToList();
             return templist;
 
          }

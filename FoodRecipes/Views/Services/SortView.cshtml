@@ -1,0 +1,108 @@
+﻿@model PagedList.IPagedList<FoodRecipes.Models.Recipe>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+@{
+    ViewBag.Title = "SortView";
+    
+  
+}
+
+<h2>SortView</h2>
+<h2> @Html.ActionLink("Back to search","Search","Recipe")</h2>
+
+
+<div class="container">
+   
+    <div class="row" style="margin-top: 3em">
+   
+        <aside class="col-lg-3 col-md-4 searchaside" style="border: 1px solid ;margin-left: -5em">
+            @using (Html.BeginForm())
+            {
+                <fieldset>
+                    
+                   
+                    <div class="editor-label">
+                        @Html.Label("page size")
+                    </div>
+                    <div class= "editor-field">
+                        @Html.DropDownList("pagesize", (SelectList)ViewBag.GroupNumberList)
+                        @Html.ValidationMessage("pagesize")
+                    </div>
+                    <div class="editor-label">
+                        @Html.Label("Sort Patrn")
+                    </div>
+
+                    <div class="editor-field">
+                       
+                        @Html.DropDownList("sortOrder", (SelectList)ViewBag.sortOrderlist)
+                    </div>
+                    @Html.Hidden("Page",1);
+                    <p>
+                      
+                        <input type="submit" class="btn btn-danger" value="Refresh"id="sendForm"  />
+                    </p>
+                         
+                </fieldset>
+            }
+        
+        </aside>
+
+        <article class="searchPartialView col-lg-9 col-md-8" style="border: 2px solid;margin-left: 5em">
+          
+         
+            @foreach (var item in Model)
+            {
+                <div class="col-lg-4 col-sm-5 thumbnail"  >
+                    @{
+                        string pa = item.ImgPath;
+                    }
+                    <img src="@Url.Content(pa)" class="img-responsive"alt="" >
+                    <p style="text-align: center">@item.Title</p>
+                    
+                    @Html.ActionLink("see more..", "RecipeDetails", "Recipe", new { id = item.Id }, null)
+                  
+                </div>
+            }
+
+        
+        </article>
+
+        
+
+    </div>
+    <div class="row">
+        <div class="col-lg-8 col-lg-push-3" >
+            <div class="row">
+            
+                <div class="col-lg-2"style="margin-top: 0.4em">
+                    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount  
+                </div>
+                <div class="col-lg-6" style="margin-top: -1em">
+                    @Html.PagedListPager(Model, page => Url.Action("SortView", new { page, ViewBag.currentorder, ViewBag.currentsize })) 
+                </div>
+            </div>
+        </div>
+
+    </div>
+   
+</div>
+
+
+@*<script type="text/javascript">
+    document.querySelector('#sendForm').addEventListener('click', function(e) {
+        
+        console.log(e.target.id);
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("SortView","Services")",
+            data: {
+                page: 1,
+                sortOrder: $("#sortOrder").val(),
+                pageSize: $("#pagesize").val(),
+                // document.getElementById(sortOrder).value
+
+            }
+        });
+
+    });
+</script>*@
