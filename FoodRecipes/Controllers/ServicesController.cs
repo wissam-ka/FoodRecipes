@@ -19,7 +19,7 @@ namespace FoodRecipes.Controllers
         //
         // GET: /Services/
 
-        public ViewResult SortView(string sortOrder, int? page,int? pagesize)
+        public ViewResult SortView(string sortOrder, int? page, int? pagesize, string PNumberState,bool ? coTimeActive,string coTime,string Pnum)
         {
             StaticInfo saticinfo = new StaticInfo(db);
             var groupnumberlist = new SelectList(new[] { "6", "12", "24" });
@@ -52,19 +52,42 @@ namespace FoodRecipes.Controllers
                     break;
             }
             
+            if (coTimeActive==true)
+            {
+                var intcotime = int.Parse(coTime);
+                recipestemp = from item in recipestemp
+                              where item.CookingTime <= intcotime
+                    select item;
+            }
+
+            if (!PNumberState.IsEmpty())
+            {
+                var intPnum = int.Parse(Pnum);
+                if (PNumberState.Equals("less"))
+                {
+                    recipestemp = from item in recipestemp
+                        where item.PeopoleNumber <= intPnum
+                        select item;
+                }
+                else
+                {
+                    recipestemp = from item in recipestemp
+                        where item.PeopoleNumber >= intPnum
+                        select item;
+                }
+            }
+
+
 
             var pageNumber = (page ?? 1);
             var pageSize = (pagesize ?? 6);
-            pageNumber = pageNumber * pagesize > recipestemp.Count() ? 1 : pageNumber;
+           
             ViewBag.currentsize = pageSize;
             ViewBag.currentorder = sortOrder;
             return View(recipestemp.ToPagedList(pageNumber, pageSize));
         }
 
-        public ActionResult CustomizedView()
-        {
-            return null;
-        }
+        
 
 
 

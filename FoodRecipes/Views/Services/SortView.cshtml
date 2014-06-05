@@ -3,6 +3,7 @@
 <link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 @{
     ViewBag.Title = "SortView";
+   
 }
 
 <h2>SortView</h2>
@@ -35,25 +36,25 @@
                     </div>
                     @Html.Hidden("Page", 1)
                     <hr/>
-                    <div class="checkbox">
+                    <div>
                         <label>
-                            <input type="checkbox" value="Cookingtime"/> Cooking Time less than
+                            @Html.CheckBox("cotimeActive")
+                          Cooking Time less than
                         </label>
                         @Html.TextBox("coTime", 0, new { size = 3 }) min
                     </div>
-                    <div class="checkbox">
-                        <label>
-                            <input type="checkbox" value="Nless"/> Recipe For less than
-                        </label>
-                        @Html.TextBox("Pless", 0, new { size = 3 })People
+                    <div >
+                        <p>
+                            @Html.RadioButton("PNumberState","less",false)Recipe For less than
+                        </p>
+                        <p>
+                            @Html.RadioButton("PNumberState", "more", true)Recipe For more than
+                        </p>
+                        <p>
+                                @Html.TextBox("Pnum", 0, new { size = 3 })People
+                        </p>
                     </div>
-                    <div class="checkbox">
-                        <label>
-                            <input type="checkbox" value="Nmore"/> Recipe For less than
-                        </label>
-                        @Html.TextBox("Pmore", 0, new { size = 3 })People
-                    </div>
-                    
+                 
                     
                     <p>
                       
