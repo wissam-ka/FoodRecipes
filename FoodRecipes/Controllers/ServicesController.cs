@@ -114,7 +114,7 @@ namespace FoodRecipes.Controllers
             Recipe recipe = db.Recipes.Find(id);
             db.Recipes.Remove(recipe);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("SortView");
         }
 
         protected override void Dispose(bool disposing)

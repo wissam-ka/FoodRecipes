@@ -15,6 +15,7 @@ using FoodRecipes.ProjectClasses;
 
 namespace FoodRecipes.Controllers
 {
+    [AllowAnonymous]
      [LogginActionFilter.LoggingActionFilter]
     public class RecipeController : Controller
     {

@@ -170,6 +170,8 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Areas\cocktails\cocktailsAreaRegistration.cs" />
+    <Compile Include="Areas\cocktails\Controllers\CocktailController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\RecipeController.cs" />
@@ -323,11 +325,15 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Areas\cocktails\Models\" />
+    <Folder Include="Areas\cocktails\Views\Shared\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Areas\cocktails\Views\Web.config" />
+    <Content Include="Areas\cocktails\Views\Cocktail\Index.cshtml" />
     <None Include="Content\bootstrap-theme.css.map" />
     <None Include="Content\bootstrap.css.map" />
     <None Include="Controllers\fonts\glyphicons-halflings-regular.eot" />

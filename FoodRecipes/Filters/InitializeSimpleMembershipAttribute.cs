@@ -3,6 +3,7 @@ using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Threading;
 using System.Web.Mvc;
+using System.Web.Security;
 using WebMatrix.WebData;
 using FoodRecipes.Models;
 
@@ -39,6 +40,18 @@ namespace FoodRecipes.Filters
                     }
 
                     WebSecurity.InitializeDatabaseConnection("DefaultConnection", "UserProfile", "UserId", "UserName", autoCreateTables: true);
+                    const string adminRole = "Administrator";
+                    const string adminName = "Administrator";
+
+                    if (!Roles.RoleExists(adminRole))
+                    {
+                        Roles.CreateRole(adminRole);
+                    }
+                    if (!WebSecurity.UserExists(adminName))
+                    {
+                        WebSecurity.CreateUserAndAccount(adminName, "password");
+                        Roles.AddUserToRole(adminName, adminRole);
+                    }           
                 }
                 catch (Exception ex)
                 {
