@@ -15,6 +15,7 @@
     <div class="row" style="margin-top: 3em">
    
         <aside class="col-lg-3 col-md-4 searchaside" style="border: 1px solid ;margin-left: -5em">
+            @*@using (Html.BeginForm("SortView", "Services", new { pageNumber = Model.PageNumber}))*@
             @using (Html.BeginForm())
             {
                 <fieldset>
@@ -25,6 +26,7 @@
                     </div>
                     <div class= "editor-field">
                         @Html.DropDownList("pagesize", (SelectList)ViewBag.GroupNumberList)
+                   
                         @Html.ValidationMessage("pagesize")
                     </div>
                     <div class="editor-label">
@@ -37,21 +39,26 @@
                     @Html.Hidden("Page", 1)
                     <hr/>
                     <div>
+                        
                         <label>
-                            @Html.CheckBox("cotimeActive")
-                          Cooking Time less than
+                            
+                            @* @Html.CheckBox("cotimeActive", new { id = "cotimeActive1" })*@
+                             <input type="checkbox" name="cotimeActive" value="false" id = "cotimeActive1" >
+                            Cooking Time less than
                         </label>
-                        @Html.TextBox("coTime", 0, new { size = 3 }) min
+                        <div >
+                            @Html.TextBox("coTime",0, new { size = 3, id = "coTime1" }) min
+                            </div>
                     </div>
                     <div >
                         <p>
-                            @Html.RadioButton("PNumberState","less",false)Recipe For less than
+                            @Html.RadioButton("PNumberState", "less", false)Recipe For less than
                         </p>
                         <p>
                             @Html.RadioButton("PNumberState", "more", true)Recipe For more than
                         </p>
                         <p>
-                                @Html.TextBox("Pnum", 0, new { size = 3 })People
+                            @Html.TextBox("Pnum", 0, new { size = 3 })People
                         </p>
                     </div>
                  
@@ -71,12 +78,13 @@
          
             @foreach (var item in Model)
             {
-                <div class="col-lg-4 col-sm-5 thumbnail"  >
+                <div class="col-lg-3 col-sm-4 thumbnail"  >
                     @{
-                string pa = item.ImgPath;
+                        string pa = item.ImgPath;
                     }
                     <img src="@Url.Content(pa)" class="img-responsive"alt="" >
                     <p style="text-align: center">@item.Title</p>
+                    
                     
                     @Html.ActionLink("see more..", "RecipeDetails", "Recipe", new { id = item.Id }, null)
                   
@@ -98,6 +106,8 @@
                 </div>
                 <div class="col-lg-6" style="margin-top: -1em">
                     @Html.PagedListPager(Model, page => Url.Action("SortView", new { page, ViewBag.currentorder, ViewBag.currentsize })) 
+                    
+                
                 </div>
             </div>
         </div>
@@ -105,3 +115,34 @@
     </div>
    
 </div>
+
+
+
+@* ReSharper disable once WrongExpressionStatement *@
+
+<script type="text/javascript">
+    document.querySelector("#sendForm").addEventListener('click', function(e) {
+        console.log(e.target);
+        e.preventDefault();
+        //var form = $(this).parent("form");
+
+
+//    var url = "Services/SortView/##pageNumber/##pageSize";
+
+        var url = "@Html.Raw(Url.Action("SortView", "Services", new { pageNumber = Model.PageNumber, sortOrder = "__sortOrder", pageSize = "__pageSize", cookingTimeActive = "__coTimeActive", cookingTime = "__cookingTime"}))";
+        //int? page, //string Pnum
+        console.log(e.target);
+        url = url.replace("__pageSize", $('#pagesize').val());
+        url = url.replace("__sortOrder", $('#sortOrder').val());
+        url = url.replace("__coTimeActive",$('#cotimeActive1').is(':checked'));
+        //$('#cotimeActive1').val() );
+        url = url.replace("__cookingTime", $('#coTime1').val());
+        // url=url.replace("__pNumberState",$('#PNumberState').val() );
+        // url=url.replace("__peopleNum",$('#Pnum').val() );
+
+
+        window.location = url;
+        console.log(url);
+    });
+
+</script>

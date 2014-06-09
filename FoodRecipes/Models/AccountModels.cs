@@ -14,9 +14,12 @@ namespace FoodRecipes.Models
         public UsersContext()
             : base("DefaultConnection")
         {
+            
+          
         }
-
+       
         public DbSet<UserProfile> UserProfiles { get; set; }
+
     }
 
     [Table("UserProfile")]
@@ -26,6 +29,7 @@ namespace FoodRecipes.Models
         [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
         public int UserId { get; set; }
         public string UserName { get; set; }
+        public string NickName { get; set; }
     }
 
     public class RegisterExternalLoginModel
@@ -33,6 +37,9 @@ namespace FoodRecipes.Models
         [Required]
         [Display(Name = "User name")]
         public string UserName { get; set; }
+        [Required]
+        [Display(Name = "User nick name")]
+        public string NickName { get; set; }
 
         public string ExternalLoginData { get; set; }
     }
@@ -76,6 +83,9 @@ namespace FoodRecipes.Models
         [Required]
         [Display(Name = "User name")]
         public string UserName { get; set; }
+        [Required]
+        [Display(Name = "User  nick name")]
+        public string NickName { get; set; }
 
         [Required]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]

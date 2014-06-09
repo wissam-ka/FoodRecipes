@@ -2,6 +2,7 @@
 
 @{
     ViewBag.Title = "Log in";
+    Layout = "~/Views/Shared/_LoginViews.cshtml";
 }
 
 <hgroup class="title">
@@ -22,6 +23,7 @@
                 @Html.TextBoxFor(m => m.UserName)
                 @Html.ValidationMessageFor(m => m.UserName)
             </li>
+
             <li>
                 @Html.LabelFor(m => m.Password)
                 @Html.PasswordFor(m => m.Password)

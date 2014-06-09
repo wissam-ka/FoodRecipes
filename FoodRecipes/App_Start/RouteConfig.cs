@@ -21,6 +21,23 @@ namespace FoodRecipes
                 constraints: new { id = @"^\d+$" }
             );
             routes.MapRoute(
+
+                name: "SortView",
+                //  url: "{controller}/{action}/{pageNumber}"
+                url: "{controller}/{action}/{pageNumber}/{currentorder}/{pageSize}/{cookingTime}/{cookingTimeActive}"
+                //,defaults: new { controller = "Services", action = "SortView"}
+                
+            );
+            routes.MapRoute(
+
+                name: "SortViewpage",
+                  url: "{controller}/{action}/{page}/{currentorder}/{currentsize}"
+
+            );
+
+
+            
+            routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Recipe", action = "Index", id = UrlParameter.Optional },

@@ -5,6 +5,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.UI.WebControls;
 using System.Web.WebPages;
 using FoodRecipes.Models;
 using FoodRecipes.ProjectClasses;
@@ -18,8 +19,23 @@ namespace FoodRecipes.Controllers
 
         //
         // GET: /Services/
+        //[HttpGet]
+        //public ViewResult SortView()
+        //{
+        //    StaticInfo saticinfo = new StaticInfo(db);
+        //    var groupnumberlist = new SelectList(new[] { "6", "12", "24" });
+        //    ViewBag.GroupNumberList = groupnumberlist;
+        //    var sortOrderlist = new SelectList(new[] { "Rate", "Name", "Date", "CookingTime" });
+        //    ViewBag.sortOrderlist = sortOrderlist;
+        //    var sortOrder = "FinalRate";
+        //    var recipestemp = saticinfo.SortRecipes(sortOrder, db);
+        //    var pageNumber = 1;
+        //    var pageSize =  6;
 
-        public ViewResult SortView(string sortOrder, int? page, int? pagesize, string PNumberState,bool ? coTimeActive,string coTime,string Pnum)
+        //    return View(recipestemp.ToPagedList(pageNumber, pageSize));
+        //}
+        //[HttpPost]
+        public ViewResult SortView(string sortOrder, int? page, int? pagesize,bool ? cookingTimeActive,string cookingTime)
         {
             StaticInfo saticinfo = new StaticInfo(db);
             var groupnumberlist = new SelectList(new[] { "6", "12", "24" });
@@ -32,59 +48,41 @@ namespace FoodRecipes.Controllers
             {
                 sortOrder = "FinalRate";
             }
-           
-            var recipestemp = from s in db.Recipes
-                           select s;
-
-            switch (sortOrder)
-            {
-                case "Name":
-                    recipestemp = recipestemp.OrderByDescending(s => s.Title);
-                    break;
-                case "Date":
-                    recipestemp = recipestemp.OrderBy(s => s.TimeStamp);
-                    break;
-                case "CookingTime":
-                    recipestemp = recipestemp.OrderByDescending(s => s.CookingTime);
-                    break;
-                default:  // Name ascending 
-                    recipestemp = recipestemp.OrderBy(s => s.FinalRate);
-                    break;
-            }
+            var recipestemp = saticinfo.SortRecipes(sortOrder, db);
             
-            if (coTimeActive==true)
+            if (cookingTimeActive==true)
             {
-                var intcotime = int.Parse(coTime);
+                var intcotime = int.Parse(cookingTime);
+                //recipestemp = saticinfo.CookingTimeLess(intcotime, recipestemp);
                 recipestemp = from item in recipestemp
                               where item.CookingTime <= intcotime
-                    select item;
+                              select item;
             }
 
-            if (!PNumberState.IsEmpty())
-            {
-                var intPnum = int.Parse(Pnum);
-                if (PNumberState.Equals("less"))
-                {
-                    recipestemp = from item in recipestemp
-                        where item.PeopoleNumber <= intPnum
-                        select item;
-                }
-                else
-                {
-                    recipestemp = from item in recipestemp
-                        where item.PeopoleNumber >= intPnum
-                        select item;
-                }
-            }
-
-
+            //if (!pNumberState.IsEmpty())
+            //{
+            //    var intPnum = int.Parse(peopleNum);
+            //    if (pNumberState.Equals("less"))
+            //    {
+            //        recipestemp = from item in recipestemp
+            //            where item.PeopoleNumber <= intPnum
+            //            select item;
+            //    }
+            //    else
+            //    {
+            //        recipestemp = from item in recipestemp
+            //            where item.PeopoleNumber >= intPnum
+            //            select item;
+            //    }
+            //}
 
             var pageNumber = (page ?? 1);
             var pageSize = (pagesize ?? 6);
            
             ViewBag.currentsize = pageSize;
             ViewBag.currentorder = sortOrder;
-            return View(recipestemp.ToPagedList(pageNumber, pageSize));
+            //return HttpUtility.HtmlEncode("pageSize" + pageSize+ ",pageNimber" + pageNumber);
+            return  View(recipestemp.ToPagedList(pageNumber, pageSize));
         }
 
         

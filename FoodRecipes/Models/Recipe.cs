@@ -28,6 +28,7 @@ namespace FoodRecipes.Models
         public virtual List<Comment> Comments { get; set; }
         public double FinalRate { get; set; }
         public int RatingPeople { get; set; }
+        public int UserId { get; set; }
         public Recipe()
         {
              Rates = new List<Rate>();

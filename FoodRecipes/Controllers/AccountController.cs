@@ -14,7 +14,7 @@ using FoodRecipes.Models;
 namespace FoodRecipes.Controllers
 {
     [Authorize]
-    [InitializeSimpleMembership]
+   // [InitializeSimpleMembership]
     public class AccountController : Controller
     {
         //
@@ -79,9 +79,10 @@ namespace FoodRecipes.Controllers
                 // Attempt to register the user
                 try
                 {
+                    //WebSecurity.CreateUserAndAccount(model.UserName, model.Password,new{NickName= model.NickName});
                     WebSecurity.CreateUserAndAccount(model.UserName, model.Password);
                     WebSecurity.Login(model.UserName, model.Password);
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Index", "Recipe");
                 }
                 catch (MembershipCreateUserException e)
                 {

@@ -170,6 +170,8 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Areas\Administrator\AdministratorAreaRegistration.cs" />
+    <Compile Include="Areas\Administrator\Controllers\AdminstratorController.cs" />
     <Compile Include="Areas\cocktails\cocktailsAreaRegistration.cs" />
     <Compile Include="Areas\cocktails\Controllers\CocktailController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
@@ -188,11 +190,16 @@
     <Compile Include="Models\Rate.cs" />
     <Compile Include="Models\Recipe.cs" />
     <Compile Include="Models\RecipeDataContext.cs" />
+    <Compile Include="ProjectClasses\CustomAuthorizeAttribute.cs" />
     <Compile Include="ProjectClasses\SearchCal.cs" />
     <Compile Include="ProjectClasses\StaticInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\ASPNETDB.MDF" />
+    <Content Include="App_Data\ASPNETDB_log.ldf">
+      <DependentUpon>ASPNETDB.MDF</DependentUpon>
+    </Content>
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -283,7 +290,9 @@
     <Content Include="Scripts\knockout-2.1.0.js" />
     <Content Include="Scripts\modernizr-2.5.3.js" />
     <Content Include="Scripts\RecipeDetails.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -324,7 +333,8 @@
     <Content Include="Views\Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
+    <Folder Include="Areas\Administrator\Models\" />
+    <Folder Include="Areas\Administrator\Views\Shared\" />
     <Folder Include="Areas\cocktails\Models\" />
     <Folder Include="Areas\cocktails\Views\Shared\" />
   </ItemGroup>
@@ -334,6 +344,11 @@
   <ItemGroup>
     <Content Include="Areas\cocktails\Views\Web.config" />
     <Content Include="Areas\cocktails\Views\Cocktail\Index.cshtml" />
+    <Content Include="Areas\Administrator\Views\Web.config" />
+    <Content Include="Areas\Administrator\Views\Adminstrator\CreatRole.cshtml" />
+    <Content Include="Areas\Administrator\Views\Adminstrator\Index.cshtml" />
+    <Content Include="Areas\Administrator\Views\Adminstrator\AddUserRole.cshtml" />
+    <Content Include="Areas\Administrator\Views\Adminstrator\UserIndex.cshtml" />
     <None Include="Content\bootstrap-theme.css.map" />
     <None Include="Content\bootstrap.css.map" />
     <None Include="Controllers\fonts\glyphicons-halflings-regular.eot" />
@@ -351,6 +366,7 @@
     <Content Include="Views\Shared\_SearchView.cshtml" />
     <Content Include="Views\Services\Delete.cshtml" />
     <Content Include="Views\Services\SortView.cshtml" />
+    <Content Include="Views\Shared\_LoginViews.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

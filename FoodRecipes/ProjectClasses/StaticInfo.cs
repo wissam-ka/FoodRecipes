@@ -32,16 +32,16 @@ namespace FoodRecipes.ProjectClasses
             return dbContextTemp.Recipes.OrderBy(s => s.Comments.Count).Take(x).ToList();
         }
 
-        public List<Recipe> CookingTimeLess(int x,RecipeDataContext dbContextTemp)
+        public IQueryable<Recipe> CookingTimeLess(int x,RecipeDataContext dbContextTemp)
         {
             var cookinglist = (from item in dbContextTemp.Recipes
                 where item.CookingTime <= x
-                select item).ToList();
+                select item);
 
             return cookinglist;
          }
 
-        public List<Recipe> peopleNumberBoL(int x, bool incOdec, RecipeDataContext dbContextTemp)
+        public IQueryable<Recipe> PeopleNumberBoL(int x, bool incOdec, RecipeDataContext dbContextTemp)
         {
            
             if (incOdec)
@@ -49,16 +49,39 @@ namespace FoodRecipes.ProjectClasses
                var data = (from item in dbContextTemp.Recipes
             
                            where item.PeopoleNumber <= x
-                    select item).ToList();
+                    select item);
                 return data;
             }
             else
             {
                 var data = (from item in dbContextTemp.Recipes
                             where item.PeopoleNumber >= x
-                            select item).ToList();
+                            select item);
                 return data; 
             }
+        }
+
+        public IQueryable<Recipe> SortRecipes(string sortOrder, RecipeDataContext dbContextTemp)
+        {
+            var recipestemp = from s in dbContextTemp.Recipes
+                              select s;
+
+            switch (sortOrder)
+            {
+                case "Name":
+                    recipestemp = recipestemp.OrderByDescending(s => s.Title);
+                    break;
+                case "Date":
+                    recipestemp = recipestemp.OrderBy(s => s.TimeStamp);
+                    break;
+                case "CookingTime":
+                    recipestemp = recipestemp.OrderByDescending(s => s.CookingTime);
+                    break;
+                default:  // Name ascending 
+                    recipestemp = recipestemp.OrderBy(s => s.FinalRate);
+                    break;
+            }
+            return recipestemp;
         }
 
     }

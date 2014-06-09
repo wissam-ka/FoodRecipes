@@ -1,0 +1,49 @@
+﻿@{
+    ViewBag.Title = "AddUserRole";
+}
+
+<h2>AddUserRole</h2>
+<div class="spacerBody">
+    <p>&nbsp;</p>
+    @Html.ActionLink("Create New Role", "CreatRole") | @Html.ActionLink("Roles", "Index")
+        
+<h2>Role Add to User</h2>
+
+@using (Html.BeginForm("AddUserRole", "Adminstrator"))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <div class="message-success">@ViewBag.ResultMessage</div>
+    <p>
+        Username : @Html.TextBox("UserName")
+        Role : @Html.DropDownList("RoleName", ViewBag.Roles as SelectList)
+        
+    </p>
+    
+    <input type="submit" value="Save" />
+}
+
+
+
+<div class="hr"></div>
+@using(Html.BeginForm("GetRoles", "Adminstrator")){
+    @Html.AntiForgeryToken()
+    <p>Username : @Html.TextBox("UserName") 
+        <input type="submit" value="Get Roles " />
+    </p>
+}
+       
+@if (ViewBag.UsersRoles != null)
+{
+    <text>
+    <h3>Roles for this user </h3>
+    <ol>
+@foreach (string s in ViewBag.UsersRoles)
+{
+    <li>@s</li>   
+}
+                </ol>
+    </text>
+}
+        </div>

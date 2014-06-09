@@ -11,10 +11,12 @@ using FoodRecipes.Models;
 using log4net;
 using System.Diagnostics;
 using FoodRecipes.ProjectClasses;
+using WebMatrix.WebData;
 
 
 namespace FoodRecipes.Controllers
 {
+    
     [AllowAnonymous]
      [LogginActionFilter.LoggingActionFilter]
     public class RecipeController : Controller
@@ -27,11 +29,13 @@ namespace FoodRecipes.Controllers
             
             return View();
         }
+        [Authorize]
         [HttpGet]
         public ActionResult Create()
         {
             return View();
         }
+         [Authorize]
         [HttpPost]
         public ActionResult Create(Models.Recipe tempRecipe, HttpPostedFileBase file)
         {
@@ -58,7 +62,11 @@ namespace FoodRecipes.Controllers
                 ModelState.AddModelError("file", "You have not specified a file // wrong file type");
                
             }
+            var context = new UsersContext();
+            var username = User.Identity.Name;
+            var user = context.UserProfiles.SingleOrDefault(u => u.UserName == username);
 
+             tempRecipe.UserId =user.UserId ;
             tempRecipe.TimeStamp = DateTime.Now;
             tempRecipe.FinalRate = 0;
             tempRecipe.RatingPeople = 0;
@@ -146,6 +154,7 @@ namespace FoodRecipes.Controllers
 
         public ActionResult RecipeDetails(long? id)
         {
+            Debug.WriteLine(WebSecurity.CurrentUserId);
             var db = new RecipeDataContext();
             if (!id.HasValue)
             {
@@ -155,14 +164,20 @@ namespace FoodRecipes.Controllers
 
             
             var recipe = db.Recipes.Find(id);
+           
+                
+            
             if (recipe == null)
             {
                 return View(db.Recipes.FirstOrDefault());
               
             }
+                
+
             return View(recipe);
             
         }
+         [CustomAuthorizeAttribute]
         [HttpGet]
         public ActionResult Edit(long? id)
         {
@@ -178,10 +193,19 @@ namespace FoodRecipes.Controllers
                 return RedirectToAction("Index");
                
             }
+             var context = new UsersContext();
+            var username = User.Identity.Name;
+            var user = context.UserProfiles.SingleOrDefault(u => u.UserName == username);
+
+
+            if (user.UserId == tempRecipe.UserId)
+            {
+                return RedirectToAction("RecipeDetails", new {id = id});
+            }
 
            return View(tempRecipe);
         }
-
+        [CustomAuthorizeAttribute]
         [HttpPost]
         public ActionResult Edit(Models.Recipe tempRecipe, HttpPostedFileBase file)
         {
