@@ -349,6 +349,7 @@
     <Content Include="Areas\Administrator\Views\Adminstrator\Index.cshtml" />
     <Content Include="Areas\Administrator\Views\Adminstrator\AddUserRole.cshtml" />
     <Content Include="Areas\Administrator\Views\Adminstrator\UserIndex.cshtml" />
+    <Content Include="Areas\Administrator\Views\Adminstrator\DeleteRoleForUser.cshtml" />
     <None Include="Content\bootstrap-theme.css.map" />
     <None Include="Content\bootstrap.css.map" />
     <None Include="Controllers\fonts\glyphicons-halflings-regular.eot" />

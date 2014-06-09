@@ -154,6 +154,7 @@ namespace FoodRecipes.Controllers
 
         public ActionResult RecipeDetails(long? id)
         {
+          
             Debug.WriteLine(WebSecurity.CurrentUserId);
             var db = new RecipeDataContext();
             if (!id.HasValue)
@@ -172,8 +173,9 @@ namespace FoodRecipes.Controllers
                 return View(db.Recipes.FirstOrDefault());
               
             }
-                
-
+               var context = new UsersContext();
+            var user = context.UserProfiles.SingleOrDefault(u => u.UserId==recipe.UserId);
+            ViewBag.userName = user.NickName;
             return View(recipe);
             
         }

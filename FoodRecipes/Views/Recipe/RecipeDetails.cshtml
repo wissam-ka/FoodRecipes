@@ -20,30 +20,38 @@
 </head>
 <br/>
 <div style="margin-top: 2em">
-        <ol class="breadcrumb">
-            <li ><a href="@Url.Action("Index")">Home</a> <span class="glyphicon glyphicon-circle-arrow-right"></span></li>
-            <li ><a href="@Url.Action("Search")" >search</a> <span class="glyphicon glyphicon-circle-arrow-right"></span></li>
-            <li class="active"><a href="#">RecipeDetails</a> <span class="glyphicon glyphicon-circle-arrow-right"></span></li>
-            <li ><a href="@Url.Action("Edit","Recipe",new{id=recipetemp.Id})">Edit</a> <span class="glyphicon glyphicon-circle-arrow-right"></span></li>
-        </ol>
-    </div>
-<h1 >RecipeDetails</h1>
-
-<div class="partialRecipeView" id="viewtoreplace">
-    @Html.Partial("_RecipePart",Model)
+    <ol class="breadcrumb">
+        <li ><a href="@Url.Action("Index")">Home</a> <span class="glyphicon glyphicon-circle-arrow-right"></span></li>
+        <li ><a href="@Url.Action("Search")" >search</a> <span class="glyphicon glyphicon-circle-arrow-right"></span></li>
+        <li class="active"><a href="#">RecipeDetails</a> <span class="glyphicon glyphicon-circle-arrow-right"></span></li>
+        <li ><a href="@Url.Action("Edit","Recipe",new{id=recipetemp.Id})">Edit</a> <span class="glyphicon glyphicon-circle-arrow-right"></span></li>
+    </ol>
 </div>
-<div class="row">
-    
-    <div class=" col-lg-8 col-lg-push-2 container ">
 
-        <div class="patialcommentsview">
-            @foreach (var item in Model.Comments)
-            {
-                @Html.Partial("CommentPart", item)
-            }
+    
+        <div class="container" style="margin-left: 1em ;background-color: gainsboro; width: 20em ">
+            <h1 >RecipeDetails</h1>
+            <h2 >Added by: @ViewBag.userName</h2>
+        </div>
+   
+    
+    <div class="partialRecipeView" id="viewtoreplace">
+        @Html.Partial("_RecipePart",Model)
+    </div>
+ 
+    <div class="row">
+    
+        <div class=" col-lg-8 col-lg-push-3 container ">
+
+            <div class="patialcommentsview">
+                @foreach (var item in Model.Comments)
+                {
+                    @Html.Partial("CommentPart", item)
+                }
+            </div>
         </div>
     </div>
-</div>
+
 
 
 <div class="row">
